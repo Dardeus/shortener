@@ -1,0 +1,33 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  margin-left:  auto;
+  margin-right:  auto;
+  margin-top: 40px;
+  width: 300px;
+
+  & * {
+    font-size: 22px;
+    padding: 10px 20px;
+    border: 2px solid deepskyblue;
+  }
+
+  .input {
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+
+  .submit {
+    border-radius: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .error {
+    border: 0;
+    font-size: 18px;
+    color: red;
+  }
+}
