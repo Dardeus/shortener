@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {useDispatch} from "react-redux";
+import {useDispatch} from 'react-redux'
+import statReducer from './slices/statisticSlice'
 
 export const store = configureStore({
   reducer: {
-
+    statistics: statReducer
   },
 })
 

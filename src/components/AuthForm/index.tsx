@@ -1,6 +1,7 @@
 import React, {Dispatch, SetStateAction, useState} from 'react';
 import styles from './AuthForm.module.scss'
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 type AuthProps = {
   regLog: RegLog
@@ -16,38 +17,50 @@ type RegLog = {
   regLog: "login" | "registration"
 }
 
-const AuthForm: React.FC<RegLog> = ({ regLog}) => {
-  const [login, setLogin] = useState('')
+const AuthForm: React.FC<RegLog> = ({ regLog }) => {
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
-  console.log(localStorage.getItem("access_token"))
-  const onClickSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
+  const onClickLogin = async (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault()
-    const url = "https://front-test.hex.team/api/login"
-    const logIn = async () => {
-      try {
-        const response = await axios.post(url,
+    try {
+        const response = await axios.post("https://front-test.hex.team/api/login",
           {
-            username: login,
+            username: username,
             password: password
           })
         localStorage.setItem("access_token", response.data.access_token)
         setError('')
-      }
-      catch (e: any) {
-        setLogin("")
+        navigate('/')
+    } catch (e: any) {
         setPassword("")
         setError(e.response.data.detail)
+        console.log(error)
       }
+  }
+
+  const onClickRegister = async (event: React.FormEvent<HTMLInputElement>) => {
+    event.preventDefault()
+    try {
+      const response = await axios.post(
+        `https://front-test.hex.team/api/register?username=${username}&password=${password}`
+      )
+      setError('')
+      navigate('/login')
+      console.log(response)
+    } catch (e: any) {
+      setPassword ("")
+      setError(e.response.data.detail)
+      console.log(error)
     }
-    logIn()
   }
 
   return (
     <form className={styles.root}>
-        <input value={login}
-               onChange={(e) => setLogin(e.target.value)}
+        <input value={username}
+               onChange={(e) => setUsername(e.target.value)}
                className={styles.input}
                placeholder='Логин'
         />
@@ -60,9 +73,11 @@ const AuthForm: React.FC<RegLog> = ({ regLog}) => {
           className={styles.submit}
           type="submit"
           value="Отправить"
-          onClick={onClickSubmit}
+          onClick={regLog==='login' ? onClickLogin : onClickRegister}
         />
-        {error && <p className={styles.error}>Неправильный логин или пароль</p>}
+        {error && <p className={styles.error}>
+          {regLog==='login' ? 'Неправильный логин или пароль' : 'Пользователь с таким именем уже существует'}
+        </p>}
     </form>
   )
 }
