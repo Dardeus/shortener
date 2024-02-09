@@ -1,41 +1,31 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
+import React, {useState} from 'react';
 import styles from './AuthForm.module.scss'
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {fetchAccessToken, setLogIn, setPassword, setUsername} from "../../redux/slices/authState";
+import {RootState, useAppDispatch} from "../../redux/store";
+import {useSelector} from "react-redux";
 
-type AuthProps = {
-  regLog: RegLog
-  setRegLog: Dispatch<SetStateAction<RegLog>>
-}
-
-type LoginResponse = {
-  access_token: string,
-  token_type: "bearer"
-}
 
 type RegLog = {
   regLog: "login" | "registration"
 }
 
 const AuthForm: React.FC<RegLog> = ({ regLog }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const {username, password} = useSelector((state:RootState) => state.auth)
   const [error, setError] = useState('')
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const onClickLogin = async (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault()
     try {
-        const response = await axios.post("https://front-test.hex.team/api/login",
-          {
-            username: username,
-            password: password
-          })
-        localStorage.setItem("access_token", response.data.access_token)
+        dispatch(fetchAccessToken({username, password}))
+        dispatch(setLogIn(true))
         setError('')
         navigate('/')
     } catch (e: any) {
-        setPassword("")
+        dispatch(setPassword(""))
         setError(e.response.data.detail)
         console.log(error)
       }
@@ -51,7 +41,7 @@ const AuthForm: React.FC<RegLog> = ({ regLog }) => {
       navigate('/login')
       console.log(response)
     } catch (e: any) {
-      setPassword ("")
+      dispatch(setPassword(""))
       setError(e.response.data.detail)
       console.log(error)
     }
@@ -60,12 +50,12 @@ const AuthForm: React.FC<RegLog> = ({ regLog }) => {
   return (
     <form className={styles.root}>
         <input value={username}
-               onChange={(e) => setUsername(e.target.value)}
+               onChange={(e) => dispatch(setUsername(e.target.value))}
                className={styles.input}
                placeholder='Логин'
         />
         <input value={password}
-               onChange={(e) => setPassword(e.target.value)}
+               onChange={(e) => dispatch(setPassword(e.target.value))}
                className={styles.input}
                placeholder='Пароль'
         />

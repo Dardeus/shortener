@@ -1,11 +1,11 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 
-type statProps = {
+type StatProps = {
   id: number,
-  "short": "string",
-  "target": "string",
-  "counter": number
+  short: "string",
+  target: "string",
+  counter: number
 }
 
 enum Status {
@@ -14,28 +14,42 @@ enum Status {
   ERROR = 'error'
 }
 
-interface StatState {
-  items: statProps[];
+interface IStatState {
+  items: StatProps[];
   status: Status
+  totalCount: number
 }
 
-const initialState: StatState = {
+type FetchProps = {
+  access_token: string
+  sortProperty: string
+  currentPage: number
+}
+
+type FetchReturn = {
+  data: StatProps[]
+  count: number
+}
+
+const initialState: IStatState = {
   items: [],
   status: Status.LOADING,
+  totalCount: 0
 }
 
-export const fetchStatistics = createAsyncThunk(
-  'pizzas/fetchPizzasStatus',
-  async () => {
-    const { data } = await axios.get<statProps[]>("https://front-test.hex.team/api/statistics?offset=0&limit=0",
+export const fetchStatistics = createAsyncThunk<FetchReturn, FetchProps>(
+  'statistics/fetchPizzasStatus',
+  async ({access_token, sortProperty, currentPage}) => {
+    const { data, headers } = await axios.get<StatProps[]>(
+      `https://front-test.hex.team/api/statistics?order=${sortProperty}&offset=${currentPage}&limit=10`,
       {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          'Authorization': `Bearer ${access_token}`
         }
       }
       )
-    console.log(`Bearer ${localStorage.getItem('access_token')}`)
-    return data
+    const count = Number(headers['x-total-count'])
+    return {data, count}
   }
 )
 
@@ -43,7 +57,7 @@ const statSlice = createSlice ({
   name: 'statistics',
   initialState,
   reducers: {
-    setItem(state, action: PayloadAction<statProps[]>) {
+    setItem(state, action: PayloadAction<StatProps[]>) {
       state.items = action.payload;
     },
   },
@@ -51,14 +65,17 @@ const statSlice = createSlice ({
     builder.addCase(fetchStatistics.pending, (state) => {
       state.status = Status.LOADING
       state.items = []
+      state.totalCount = 0
     })
     builder.addCase(fetchStatistics.fulfilled, (state, action) => {
-      state.items = action.payload
       state.status = Status.SUCCESS
+      state.items = action.payload.data
+      state.totalCount = action.payload.count
     })
     builder.addCase(fetchStatistics.rejected, (state) => {
       state.status = Status.ERROR
       state.items = []
+      state.totalCount = 0
     })
   }
 })

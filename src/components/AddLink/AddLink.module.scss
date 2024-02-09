@@ -1,0 +1,19 @@
+.root {
+  margin-left: auto;
+  margin-right: auto;
+  .input {
+    border: 0;
+    border-bottom: 1px solid deepskyblue;
+    margin-top: 20px;
+    font-size: 19px;
+    width: 400px;
+    padding: 5px;
+  }
+
+  .add {
+    position: absolute;
+    margin-left: 10px;
+    margin-top: 23px;
+    width: 27px;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import AuthForm from "../components/AuthForm";
-import styles from "./Login/Auth.module.scss"
+import styles from "./Auth/Auth.module.scss"
 import {Link} from "react-router-dom";
 
 const Registration: React.FC = () => {

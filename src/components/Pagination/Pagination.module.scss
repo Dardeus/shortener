@@ -1,0 +1,38 @@
+.root {
+  display: flex;
+  margin: 40px auto;
+
+  li {
+    display: inline-block;
+    margin: 10px;
+    a {
+      display: inline-block;
+      height: 55px;
+      width: 55px;
+      padding: 10px;
+      border: 1px solid deepskyblue;
+      border-radius: 30px;
+      line-height: 30px;
+      text-align: center;
+      margin-right: 5px;
+      cursor: pointer;
+      color: black;
+      font-weight: 500;
+
+      &:hover {
+        background: deepskyblue;
+        color: white;
+
+      }
+    }
+  }
+
+  :global {
+    .selected{
+      a {
+        background: deepskyblue;
+        color: white;
+      }
+    }
+  }
+}
