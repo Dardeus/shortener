@@ -1,19 +1,46 @@
 .root {
   position: absolute;
-  top: 150px;
+  top: 135px;
   left: 90px;
+  @media (max-width: 1800px) {
+    left: 130px;
+  }
+  @media (max-width: 1580px) {
+    left: 70px;
+  }
+  @media (max-width: 1450px) {
+    top: 55px;
+    left: 290px;
+  }
+  @media (max-width: 1300px) {
+    left: 210px;
+  }
+  @media (max-width: 1150px) {
+    left: 150px;
+  }
+  @media (max-width: 1030px) {
+    left: 100px;
+  }
   span {
     cursor: pointer;
     color: deepskyblue;
+    @media (max-width: 1800px) {
+      display: block;
+    }
   }
   .sort_popup {
-    width: 220px;
+    background: white;
+    width: 225px;
     position: absolute;
     left: 128px;
     top: 30px;
     border: 1px solid deepskyblue;
     border-radius: 20px;
     overflow: hidden;
+    @media (max-width: 1800px) {
+      left: -27px;
+      top: 50px;
+    }
     li {
       padding: 5px;
       text-align: center;

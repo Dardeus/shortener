@@ -38,7 +38,7 @@ const initialState: IStatState = {
 }
 
 export const fetchStatistics = createAsyncThunk<FetchReturn, FetchProps>(
-  'statistics/fetchPizzasStatus',
+  'statistics/fetchStatistics',
   async ({access_token, sortProperty, currentPage}) => {
     const { data, headers } = await axios.get<StatProps[]>(
       `https://front-test.hex.team/api/statistics?order=${sortProperty}&offset=${currentPage}&limit=10`,

@@ -17,9 +17,7 @@
       padding: 3px;
       border: 1px solid deepskyblue;
     }
-    .clicked {
-      cursor: pointer;
-    }
+
   }
   .login {
     position: absolute;
@@ -31,5 +29,18 @@
     text-align: center;
     border: 1px solid deepskyblue;
     border-radius: 20px;
+    @media (max-width: 1450px) {
+      right: 250px;
+    }
+    @media (max-width: 1300px) {
+      right: 150px;
+    }
+    @media (max-width: 1100px) {
+      right: 100px;
+    }
+  }
+
+  .clicked {
+    cursor: pointer;
   }
 }

@@ -14,7 +14,7 @@ interface IAuthState extends fetchProps{
 const initialState: IAuthState = {
   username: '',
   password: '',
-  logIn: false,
+  logIn: !!localStorage.getItem('logIn') || false,
   access_token: localStorage.getItem("access_token") || ''
 }
 
@@ -47,6 +47,7 @@ const authSlice = createSlice ({
     },
     setLogIn (state, action) {
       state.logIn = action.payload
+      localStorage.setItem('logIn', action.payload)
     }
   },
   extraReducers: (builder) => {

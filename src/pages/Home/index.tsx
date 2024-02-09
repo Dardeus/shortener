@@ -18,7 +18,7 @@ const Home:React.FC = () => {
 
   useEffect(() => {
     if (!logIn) {
-      navigate('/login')
+      navigate('/shortener/login')
     }
   }, []);
 
@@ -40,6 +40,7 @@ const Home:React.FC = () => {
       console.error(err);
     }
   }
+  console.log(logIn)
 
   return (
     <div className={styles.root}>
@@ -59,7 +60,7 @@ const Home:React.FC = () => {
         </tbody>
       </table>
       <Pagination currentPage={currentPage}/>
-      <Link to="/login" className={styles.login}>К авторизации</Link>
+      <Link to="/shortener/login" className={styles.login}>К авторизации</Link>
     </div>
   )
 }

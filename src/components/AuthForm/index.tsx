@@ -23,7 +23,7 @@ const AuthForm: React.FC<RegLog> = ({ regLog }) => {
         dispatch(fetchAccessToken({username, password}))
         dispatch(setLogIn(true))
         setError('')
-        navigate('/')
+        navigate('/shortener/')
     } catch (e: any) {
         dispatch(setPassword(""))
         setError(e.response.data.detail)
@@ -34,12 +34,11 @@ const AuthForm: React.FC<RegLog> = ({ regLog }) => {
   const onClickRegister = async (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault()
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://front-test.hex.team/api/register?username=${username}&password=${password}`
       )
       setError('')
-      navigate('/login')
-      console.log(response)
+      navigate('/shortener/login')
     } catch (e: any) {
       dispatch(setPassword(""))
       setError(e.response.data.detail)
