@@ -20,7 +20,7 @@ const Home:React.FC = () => {
     if (!logIn) {
       navigate('/shortener/login')
     }
-  }, []);
+  }, [logIn]);
 
   useEffect(() => {
     dispatch(fetchStatistics({access_token, sortProperty: activeSort.sortProperty, currentPage}))
@@ -29,6 +29,11 @@ const Home:React.FC = () => {
   useEffect(() => {
     if (status==="error") {
       dispatch(fetchAccessToken({username, password}))
+    }
+    else {
+      if (status==='success' && items.length===0) {
+        dispatch(setLogIn(false))
+      }
     }
   }, [items]);
 
@@ -40,7 +45,6 @@ const Home:React.FC = () => {
       console.error(err);
     }
   }
-  console.log(logIn)
 
   return (
     <div className={styles.root}>
