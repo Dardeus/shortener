@@ -6,8 +6,13 @@
   width: 900px;
   margin-right: auto;
   margin-left: auto;
-  margin-top: 50px;
 
+  @media (max-width: 1000px) {
+    width: 800px;
+  }
+  @media (max-width: 800px) {
+    width: 800px;
+  }
 
   table{
     margin-top: 30px;
@@ -18,26 +23,39 @@
       border: 1px solid deepskyblue;
     }
 
+    @media (max-width: 1000px) {
+      margin-right: min(30px);
+      margin-left: min(30px);
+    }
   }
-  .login {
-    position: absolute;
-    background: deepskyblue;
-    right: 100px;
-    color: white;
-    padding: 15px;
-    text-decoration: none;
-    text-align: center;
-    border: 1px solid deepskyblue;
-    border-radius: 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    width: 100vm;
+    margin-top: 50px;
     @media (max-width: 1450px) {
-      right: 250px;
+      margin-left: 30px;
     }
-    @media (max-width: 1300px) {
-      right: 150px;
+    @media (max-width: 1000px) {
+     margin-right: 30px;
     }
-    @media (max-width: 1100px) {
+    .login {
+      position: absolute;
+      background: deepskyblue;
       right: 100px;
+      color: white;
+      padding: 15px;
+      text-decoration: none;
+      text-align: center;
+      border: 1px solid deepskyblue;
+      border-radius: 20px;
+      float: right;
+      @media (max-width: 1450px) {
+        position: static;
+      }
     }
+
   }
 
   .clicked {

@@ -8,19 +8,11 @@
   @media (max-width: 1580px) {
     left: 70px;
   }
+
   @media (max-width: 1450px) {
-    top: 55px;
-    left: 290px;
+    position: sticky;
   }
-  @media (max-width: 1300px) {
-    left: 210px;
-  }
-  @media (max-width: 1150px) {
-    left: 150px;
-  }
-  @media (max-width: 1030px) {
-    left: 100px;
-  }
+
   span {
     cursor: pointer;
     color: deepskyblue;
@@ -38,6 +30,10 @@
     border-radius: 20px;
     overflow: hidden;
     @media (max-width: 1800px) {
+      left: -27px;
+      top: 50px;
+    }
+    @media (max-width: 1450px) {
       left: -27px;
       top: 50px;
     }

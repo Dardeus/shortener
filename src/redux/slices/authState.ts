@@ -19,7 +19,7 @@ const initialState: IAuthState = {
 }
 
 export const fetchAccessToken = createAsyncThunk<string, fetchProps>(
-  'pizzas/fetchPizzasStatus',
+  'auth/fetchAccess_token',
   async ({username, password}) => {
     const response = await axios.post(
       `https://front-test.hex.team/api/login`,

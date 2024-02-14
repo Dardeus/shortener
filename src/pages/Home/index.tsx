@@ -12,15 +12,9 @@ import Pagination from "../../components/Pagination";
 const Home:React.FC = () => {
   const dispatch = useAppDispatch()
   const {items, status} = useSelector((state: RootState) => state.statistics)
-  const {username, password, access_token, logIn} = useSelector((state: RootState) => state.auth)
+  const {username, password, access_token} = useSelector((state: RootState) => state.auth)
   const {activeSort, currentPage} = useSelector((state:RootState) => state.filter)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!logIn) {
-      navigate('/shortener/login')
-    }
-  }, []);
 
   useEffect(() => {
     dispatch(fetchStatistics({access_token, sortProperty: activeSort.sortProperty, currentPage}))
@@ -30,7 +24,10 @@ const Home:React.FC = () => {
     if (status==="error") {
       dispatch(fetchAccessToken({username, password}))
     }
-  }, [items]);
+    else if (status==="success" && !username && !items.length) {
+      navigate('/shortener/login')
+    }
+  }, [items.length]);
 
   const onClickCopy = async (text:string) => {
     try {
@@ -43,8 +40,11 @@ const Home:React.FC = () => {
 
   return (
     <div className={styles.root}>
-      <Sort activeSort={activeSort}/>
-      <AddLink access_token={access_token}/>
+      <div className={styles.header}>
+        <Sort activeSort={activeSort}/>
+        <AddLink access_token={access_token}/>
+        <Link to="/shortener/login" className={styles.login}>К авторизации</Link>
+      </div>
       <table>
         <tbody>
           <tr><td>Короткая ссылка</td><td>Исходная ссылка</td><td>Переходы по ссылке</td></tr>
@@ -59,7 +59,6 @@ const Home:React.FC = () => {
         </tbody>
       </table>
       <Pagination currentPage={currentPage}/>
-      <Link to="/shortener/login" className={styles.login}>К авторизации</Link>
     </div>
   )
 }

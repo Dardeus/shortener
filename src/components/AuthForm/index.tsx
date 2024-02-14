@@ -54,9 +54,11 @@ const AuthForm: React.FC<RegLog> = ({ regLog }) => {
                placeholder='Логин'
         />
         <input value={password}
+               type="password"
                onChange={(e) => dispatch(setPassword(e.target.value))}
                className={styles.input}
                placeholder='Пароль'
+               autoComplete="on"
         />
         <input
           className={styles.submit}
