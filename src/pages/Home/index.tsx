@@ -27,7 +27,7 @@ const Home:React.FC = () => {
     else if (status==="success" && !username && !items.length) {
       navigate('/shortener/login')
     }
-  }, [items.length]);
+  }, [items]);
 
   const onClickCopy = async (text:string) => {
     try {
